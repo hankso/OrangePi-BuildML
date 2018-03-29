@@ -1,0 +1,13 @@
+ipython
+jupyter
+
+pyserial
+spidev
+gpio3
+OPi.GPIO
+
+requests
+beautifulsoup
+
+keras
+mne
