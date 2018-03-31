@@ -13,6 +13,7 @@ python-zmq
 python-h5py
 python-xmltodoc
 
+vim
 git
 openjdk-8-jdk
 tightvncserver

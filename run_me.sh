@@ -7,16 +7,18 @@
 sudo nmtui
 
 # dir
-mkdir document
-mkdir download
-mkdir programs
-mkdir notebook
+mkdir -p document
+mkdir -p download
+mkdir -p programs
+mkdir -p notebook
 
 
 # dotfiles
+mv .bashrc .bashrc.old 2>/dev/null
 wget https://raw.githubusercontent.com/hankso/dotfiles/master/bashrc -O .bashrc
 source .bashrc 
 
+mv .vimrc .vimrc.old 2>/dev/null
 wget https://raw.githubusercontent.com/hankso/dotfiles/master/vimrc -O .vimrc
 
 mkdir -p .pip
