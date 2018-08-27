@@ -21,6 +21,8 @@ because they depends on compiled C dynamically linked libraries, such as `numpy`
 `tensorflow`, `pylsl` and so on. `setup.py` will call your compiler(gcc or others) 
 to compile from source. This is slow and easy to cause errors(lack of dependences).
 
+- `pylsl` is a python package depends on compiled dynamic C library named 'liblsl64.so', and here in `/files` is an aarch64 version I cross compiled. It works fine on my OPi0+
+
 - But `apt-get install python-xxx` will download `.deb` file which contains already 
 pre-compiled libs for current architecture, then your job is just unpackage it(apt 
 will do this for you). So I prefer this method when installing huge, C lib dependes 

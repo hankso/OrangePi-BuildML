@@ -3,62 +3,50 @@
 
 # *****only for python 2.7*****
 
+srcfiledir=https://raw.githubusercontent.com/hankso/OrangePi-BuildML/master/files
+dotfiledir=https://raw.githubusercontent.com/hankso/dotfiles/master
+
 # network
 sudo nmtui
 
-# dir
-mkdir -p document
-mkdir -p download
-mkdir -p programs
-mkdir -p notebook
+
+
+# dirs
+cd ~
+mkdir -p document download programs notebook .pip .vim/bundle .vim/dirs/backups 
+
 
 
 # dotfiles
-mv .bashrc .bashrc.old 2>/dev/null
-wget https://raw.githubusercontent.com/hankso/dotfiles/master/bashrc -O .bashrc
-source .bashrc 
+mv ~/.bashrc ~/.bashrc.old 2> /dev/null
+mv ~/.vimrc  ~/.vimrc.old  2> /dev/null
+wget ${dotfiledir}/bashrc   -O ~/.bashrc && source ~/.bashrc
+wget ${dotfiledir}/vimrc    -O ~/.vimrc  && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/ 2> /dev/null
+wget ${dotfiledir}/pip.conf -O ~/.pip/pip.conf
 
-mv .vimrc .vimrc.old 2>/dev/null
-wget https://raw.githubusercontent.com/hankso/dotfiles/master/vimrc -O .vimrc
 
-mkdir -p .pip
-wget https://raw.githubusercontent.com/hankso/dotfiles/master/pip.conf -O .pip/pip.conf
 
+# set mirror url and refresh package list
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo wget https://raw.githubusercontent.com/hankso/dotfiles/master/sources.list -O /etc/apt/sources.list
-sudo apt-get update
+sudo wget ${dotfiledir}/sources.list -O /etc/apt/sources.list
+sudo apt-get update && sudo apt-get upgrade
 
+# install pip and many packages by apt & pip
+cd /tmp
+wget https://bootstrap.pypa.io/get-pip.py            && sudo python2 get-pip.py
+wget ${srcfiledir}/apt-install.list                  && sudo apt-get install -y $(cat apt-install.list 2> /dev/null)
+wget ${srcfiledir}/tensorflow-1.2.1-cp27-aarch64.whl && sudo pip install ./tensorflow-1.2.1-cp27-aarch64.whl
+wget ${srcfiledir}/scipy-1.2.0-cp27-aarch64.whl      && sudo pip install ./scipy-1.2.0-cp27-aarch64.whl
+wget ${srcfiledir}/requirements.txt                  && sudo pip install -r requirements.txt 2> /dev/null
+wget ${srcfiledir}/liblsl64.so.1.4.0                 && sudo cp liblsl64.so.1.4.0 /usr/local/lib/python2.7/dist-packages/pylsl/liblsl64.so
+cd ~
 
-
-# install
-cd ~/download
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python2 get-pip.py
-
-wget https://raw.githubusercontent.com/hankso/OrangePi-BuildML/master/files/apt-install.list
-sudo apt-get install -y $(cat apt-install.list 2>/dev/null)
-
-wget https://raw.githubusercontent.com/hankso/OrangePi-BuildML/master/files/requirements.txt
-sudo pip install -r requirements.txt 2>/dev/null
-
-# I don't need python3
-#sudo apt autoremove --purge python3* 2>/dev/null
-
-# pylsl is a python package depends on compiled dynamic C library like 'liblsl64.so'
-# here is an aarch64 version I cross compiled and it works fun on my orangepi
-sudo pip install pylsl
-wget https://raw.githubusercontent.com/hankso/OrangePi-BuildML/master/files/liblsl64.so.1.4.0
-sudo mv liblsl64.so.1.4.0 /usr/local/lib/python2.7/dist-packages/pylsl/liblsl64.so
 
 
 # Tensorflow is so so different from other packages, it's hard to install
 # I failed by simply typing `pip install tensorflow` and `apt install python-tensorflow`
 # which should work at most situations(my orangepi zero plus is ARMv8 aarch64 architecture)
 # TF depends on many compiled libs, but compile with bazel is difficult and slow and need luck
-# Fortunately, this package is available on the Internet
-wget http://ai.2psoft.com/tensorflow/pine64/tensorflow-1.2.1-cp27-cp27mu-linux_aarch64.whl
-sudo pip install tensorflow-1.2.1-cp27-cp27mu-linux_aarch64.whl 2> /dev/null
-
 
 
 # nice tool for accessing your pi in different LAN
@@ -77,8 +65,3 @@ rm node-v9.6.1-linux-arm64.tar.gz
 cd node-v9.6.1-linux-arm64/bin
 sudo ln -sf $(pwd)/node /usr/local/bin/node
 sudo ln -sf $(pwd)/npm /usr/local/bin/npm
-
-
-
-# finally
-sudo apt-get upgrade

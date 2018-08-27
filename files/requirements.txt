@@ -1,13 +1,19 @@
+# for easier usage
 ipython
 jupyter
 
+# device drivers
 pyserial
 spidev
-gpio3
-OPi.GPIO
 
+# network interface
 requests
-beautifulsoup
+pylsl
+bottle
+flask
 
-keras
+# EEG signal processing
 mne
+
+# machine learing
+keras
