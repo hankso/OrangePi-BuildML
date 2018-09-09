@@ -5,15 +5,14 @@ jupyter
 # device drivers
 pyserial
 spidev
+gpio4
 
-# network interface
-requests
+# data & ML
+mne
+pywavelets
+keras
+
+# utils
 pylsl
 bottle
-flask
-
-# EEG signal processing
-mne
-
-# machine learing
-keras
+pillow

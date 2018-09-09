@@ -1,5 +1,3 @@
-apt-transport-https
-
 vim
 git
 openjdk-8-jdk
@@ -16,8 +14,8 @@ python-pil
 python-matplotlib
 python-zmq
 python-h5py
+python-pyhht
 python-xmltodoc
 
 dnsmasq
 hostapd
-dhcpcd5
