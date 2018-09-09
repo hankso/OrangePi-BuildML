@@ -13,6 +13,4 @@ pywavelets
 keras
 
 # utils
-pylsl
 bottle
-pillow
