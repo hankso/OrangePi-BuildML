@@ -21,13 +21,13 @@ mkhomedirs () {
 
 dldotfiles () {
     echo "Downloading useful dotfiles"
+    mv ~/.zshrc  ~/.zshrc.old  2> /dev/null
     mv ~/.bashrc ~/.bashrc.old 2> /dev/null
     mv ~/.vimrc  ~/.vimrc.old  2> /dev/null
-    mv ~/.zshrc  ~/.zshrc.old  2> /dev/null
-    wget ${dotfiledir}/bashrc   -O ~/.bashrc && source ~/.bashrc
-    wget ${dotfiledir}/vimrc    -O ~/.vimrc  && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/ 2> /dev/null
-    wget ${dotfiledir}/pip.conf -O ~/.pip/pip.conf
     wget ${dotfiledir}/zshrc    -O ~/.zshrc
+    wget ${dotfiledir}/pip.conf -O ~/.pip/pip.conf
+    wget ${dotfiledir}/bashrc   -O ~/.bashrc && source ~/.bashrc
+    wget ${dotfiledir}/vimrc    -O ~/.vimrc  && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/
 }
 
 dlpackages () {
@@ -59,7 +59,14 @@ others () {
 }
 
 
-if [ "${1}" != "--source-only" ]; then
+if [ "${1}" == "--source-only" ]; then
+    echo "Defined function:"
+    echo "    mkhomedirs"
+    echo "    dldotfiles"
+    echo "    dlpackages"
+    echo "    others"
+    echo "You may use them now."
+else
     mkhomedirs
     dldotfiles
     dlpackages
