@@ -1,6 +1,5 @@
 vim
 git
-openjdk-8-jdk
 tightvncserver
 openssh-server
 openssh-client
@@ -10,12 +9,9 @@ python-six
 python-numpy
 python-sklearn
 python-pandas
-python-pil
 python-matplotlib
 python-zmq
 python-h5py
-python-pyhht
-python-xmltodoc
 
 dnsmasq
 hostapd
